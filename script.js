@@ -6,7 +6,6 @@ addBook.addEventListener('click', (e) => {
 });
 
 
-
 const myLibrary = [];
 
 function Book(title, author, pages, read) {

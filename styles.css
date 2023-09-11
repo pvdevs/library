@@ -13,7 +13,6 @@ h2 {
     font-size: 24px;
 }
 
-
 .header {
     border-bottom: solid 1px #9c9c9c;
     display: flex;
@@ -43,11 +42,9 @@ h2 {
 
 .cards {
     display: grid;
-
 }
 
 .book {
-
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -91,7 +88,7 @@ h2 {
 .book-modal {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     gap: 16px;
 }
 
@@ -114,11 +111,16 @@ input {
     border-radius: 4px;
     border: none;
     padding: 12px 24px;
+    width: 312px;
 }
 
 #add-book-modal {
     border: 1px solid #9c9c9c;
     border-radius: 4px;
+}
+
+.form-read {
+    align-self: center;
 }
 
 #form-close {
@@ -132,4 +134,8 @@ input {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
     gap: 24px;
+}
+
+.book-info {
+    overflow: hidden;
 }
