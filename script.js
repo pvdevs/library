@@ -1,3 +1,14 @@
+const addBook = document.querySelector('.add-book');
+const addBookModal = document.querySelector('#add-book-modal');
+
+addBook.addEventListener('click', (e) => {
+    addBookModal.showModal();
+});
+
+
+
+const myLibrary = [];
+
 function Book(title, author, pages, read) {
     this.title = title;
     this.author = author;

@@ -13,8 +13,69 @@
     </div>
 
     <div class="content">
-        <button class="add-book">Add Book</button>
+        <dialog id="add-book-modal">
+            <form class="book-modal">
+                <button type="submit" id="form-close">X</button>                 
+                <div class="form-input">
+                    <label for="form-title">Book Title:</label>
+                    <input type="text" class="book-info" id="book-title" required>
+                </div>
+                <div class="form-input">
+                    <label for="form-title">Book Author:</label>
+                    <input type="text" class="book-info" id="book-author" required>
+                </div>
+                <div class="form-input">
+                    <label for="form-title">Book Pages:</label>
+                    <input type="number" class="book-info" id="book-pages" required>
+                </div>
+                <div class="form-read">
+                    <label for="form-checkbox">Have you read it?</label>
+                    <input type="checkbox" id="book-read">
+                </div>
+                    <button type="submit" value="Submit" id="modal-submit">Submit</button>
+            </form>
+        </dialog>
+
+        <form action="" method="dialog">
+            <button class="add-book">Add Book</button>
+        </form>
         <div class="books">
+            <div class="book">
+                <h2 class="book-info title">The name of the wind!</h2>
+                <p class="book-info author">Patrick Ruthfuss</p>
+                <p class="book-info pages">250 Pages</p>
+                <div class="buttons">
+                    <button class="book-info read">Unread D:</button>
+                    <button class="book-info remove">Remove</button>
+                </div>
+            </div>
+            <div class="book">
+                <h2 class="book-info title">The name of the wind!</h2>
+                <p class="book-info author">Patrick Ruthfuss</p>
+                <p class="book-info pages">250 Pages</p>
+                <div class="buttons">
+                    <button class="book-info read">Unread D:</button>
+                    <button class="book-info remove">Remove</button>
+                </div>
+            </div>
+            <div class="book">
+                <h2 class="book-info title">The name of the wind!</h2>
+                <p class="book-info author">Patrick Ruthfuss</p>
+                <p class="book-info pages">250 Pages</p>
+                <div class="buttons">
+                    <button class="book-info read">Unread D:</button>
+                    <button class="book-info remove">Remove</button>
+                </div>
+            </div>
+            <div class="book">
+                <h2 class="book-info title">The name of the wind!</h2>
+                <p class="book-info author">Patrick Ruthfuss</p>
+                <p class="book-info pages">250 Pages</p>
+                <div class="buttons">
+                    <button class="book-info read">Unread D:</button>
+                    <button class="book-info remove">Remove</button>
+                </div>
+            </div>
             <div class="book">
                 <h2 class="book-info title">The name of the wind!</h2>
                 <p class="book-info author">Patrick Ruthfuss</p>
