@@ -1,12 +1,23 @@
+const myLibrary = [];
+
 const addBook = document.querySelector('.add-book');
 const addBookModal = document.querySelector('#add-book-modal');
+const formClose = document.querySelector('#form-close');
+const bookTitle = document.querySelector('#book-title');
+const bookAuthor = document.querySelector('#book-author');
+const bookPages = document.querySelector('#book-pages');
+const bookRead = document.querySelector('#book-read');
+const submitButton = document.querySelector('#modal-submit');
+
+
 
 addBook.addEventListener('click', (e) => {
     addBookModal.showModal();
 });
 
+submitButton.addEventListener('click', (e) => {
 
-const myLibrary = [];
+});
 
 function Book(title, author, pages, read) {
     this.title = title;
