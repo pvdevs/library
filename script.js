@@ -1,11 +1,9 @@
-function Book(title, author, pages, youHaveRead) {
+function Book(title, author, pages) {
     this.title = title;
     this.author = author;
     this.pages = pages;
-    this.youHaveRead = youHaveRead;
     this.info = function () {
-        youHaveRead ? console.log(`${this.title} by ${this.author}, ${this.pages} pages, Alredy read!`) : console.log(`${this.title} by ${this.author}, ${this.pages} pages, Not read yet!`);
-
+        console.log(`${title} by ${author}, ${pages} Pages.`);
     }
 }
 
