@@ -9,8 +9,7 @@ const bookPages = document.querySelector('#book-pages');
 const bookRead = document.querySelector('#book-read');
 const submitButton = document.querySelector('#modal-submit');
 const books = document.querySelector('.books');
-
-
+const removeBookButton = document.querySelector('.remove');
 
 addBook.addEventListener('click', (e) => {
     addBookModal.showModal();
@@ -34,9 +33,11 @@ bookRead.addEventListener('click', (e) => {
 });
 
 
-function createBookCard(title, author, pages, read) {
-    const div = document.createElement('div');
-    div.classList.add('book');
+function createBookCard(title, author, pages, read, id) {
+    const book = document.createElement('div');
+    book.classList.add('book');
+
+    book.setAttribute("id", `${id}`);
 
     const bookTitle = document.createElement('h2');
     bookTitle.classList.add('book-info');
@@ -61,25 +62,42 @@ function createBookCard(title, author, pages, read) {
     removeButton.classList.add('book-info');
     removeButton.classList.add('remove');
 
+    readButton.addEventListener('click', (e) => {
+        const parentId = e.target.parentNode.parentNode.id;
+        const parent = document.getElementById(parentId);
+
+        e.target.classList.toggle('alredy-read');
+        myLibrary[parentId - 1].toggleRead();
+    });
+
+    removeButton.addEventListener('click', (e) => {
+        const parentId = e.target.parentNode.parentNode.id;
+        const parent = document.getElementById(parentId);
+
+        books.removeChild(parent);
+
+        console.log(myLibrary);
+        myLibrary.splice(parentId - 1,1);
+        console.log(myLibrary);        
+    });
+
     bookTitle.textContent = title;
     bookAuthor.textContent = author;
     bookPages.textContent = pages;
     readButton.textContent = 'Read';
     removeButton.textContent = 'Remove';
 
-    div.append(bookTitle, bookAuthor, bookPages);
-    div.appendChild(cardButtons);
+    book.append(bookTitle, bookAuthor, bookPages);
+    book.appendChild(cardButtons);
 
     cardButtons.append(readButton, removeButton);
 
-    books.appendChild(div);
+    books.appendChild(book);
 }
 
 function displayBooks(id) {
-    createBookCard(myLibrary[id].title, myLibrary[id].author, myLibrary[id].pages, myLibrary[id].read);
+    createBookCard(myLibrary[id].title, myLibrary[id].author, myLibrary[id].pages, myLibrary[id].read, myLibrary[id].id);
 }
-
-
 
 
 function Book(title, author, pages, read) {

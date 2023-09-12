@@ -140,3 +140,7 @@ input {
 .book-info {
     overflow-wrap: break-word;
 }
+
+.alredy-read{
+    background-color: #00c010;
+}
