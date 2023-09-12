@@ -24,13 +24,31 @@ function Book(title, author, pages, read) {
     this.author = author;
     this.pages = pages;
     this.read = read;
+    this.id = myLibrary.length + 1;
     this.info = function () {
-        console.log(`${title} by ${author}, ${pages} Pages.`);
-    }    
+        console.log(`${this.title} by ${this.author}, ${this.pages} Pages, ${this.read} Read, ${this.id} Id.`);
+    }
+    myLibrary.push(this);
+};
+
+
+const theHobbit1 = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false);
+const theHobbit2 = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false);
+const theHobbit3 = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false);
+
+myLibrary.push(theHobbit1, theHobbit2, theHobbit3);
+
+Book.prototype.info = function () {
+    console.log(`
+    ${this.title} by
+    ${this.author},
+    ${this.pages} Pages,
+    ${this.read} Read,
+    ${this.id} Id.`);
 }
 
-const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false);
-
-theHobbit.info;
+theHobbit1.info();
+theHobbit2.info();
+theHobbit3.info();
 
 // Notes for myself -> I need to create the function that toggles if i read or not the book.
