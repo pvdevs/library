@@ -78,8 +78,9 @@ h2 {
 
 .buttons {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    justify-content: center;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+    align-items: end;
     gap: 16px;
     padding-top: 16px;
     inline-size: 100%;
@@ -137,5 +138,5 @@ input {
 }
 
 .book-info {
-    overflow: hidden;
+    overflow-wrap: break-word;
 }
