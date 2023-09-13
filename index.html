@@ -15,7 +15,7 @@
     <div class="content">
         <dialog id="add-book-modal">
             <form class="book-modal">
-                <button type="submit" id="form-close">X</button>             
+                <button type="reset" id="form-close">X</button>             
                 <div class="form-input">
                     <label for="book-title">Book Title:</label>
                     <input type="text" class="book-info" id="book-title" required>
@@ -26,7 +26,7 @@
                 </div>
                 <div class="form-input">
                     <label for="book-pages">Book Pages:</label>
-                    <input type="number" class="book-info" id="book-pages" required>
+                    <input type="number" class="book-info" id="book-pages" min="1" required>
                 </div>
                 <div class="form-read">
                     <label for="book-read">Have you read it?</label>
@@ -47,7 +47,7 @@
                 <div class="buttons">
                     <button class="book-info read">Unread D:</button>
                     <button class="book-info remove">Remove</button>
-                </div>
+                </div>  
             </div>
             <div class="book">
                 <h2 class="book-info title">The name of the wind!</h2>

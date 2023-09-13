@@ -1,22 +1,42 @@
 const myLibrary = [];
 
 const addBook = document.querySelector('.add-book');
-const addBookModal = document.querySelector('#add-book-modal');
-const formClose = document.querySelector('#form-close');
-const bookTitle = document.querySelector('#book-title');
-const bookAuthor = document.querySelector('#book-author');
-const bookPages = document.querySelector('#book-pages');
-const bookRead = document.querySelector('#book-read');
-const submitButton = document.querySelector('#modal-submit');
+const addBookModal = document.getElementById('add-book-modal');
+const formClose = document.getElementById('form-close');
+const bookTitle = document.getElementById('book-title');
+const bookAuthor = document.getElementById('book-author');
+const bookPages = document.getElementById('book-pages');
+const bookRead = document.getElementById('book-read');
+const submitButton = document.getElementById('modal-submit');
 const books = document.querySelector('.books');
 const removeBookButton = document.querySelector('.remove');
 
-addBook.addEventListener('click', (e) => {
-    addBookModal.showModal();
+
+addBook.addEventListener('click', (e) => { addBookModal.showModal(); });
+
+formClose.addEventListener('click', (e) => {
+    addBookModal.close();
 });
 
 submitButton.addEventListener('click', (e) => {
     e.preventDefault()
+
+    //Form Validation
+    if(bookTitle.value === '') {
+        bookTitle.focus();
+        return false;
+    }
+    if(bookAuthor.value === '') {
+        bookAuthor.focus();
+        return false;
+    }
+    if(bookPages.value <= 1) {
+        bookPages.focus();
+        return false;
+    }
+    else {
+
+    //Create new Book object, them clear inputs
     const temp = new Book(bookTitle.value, bookAuthor.value, bookPages.value, bookRead.checked);
     bookTitle.value = '';
     bookAuthor.value = '';
@@ -26,12 +46,7 @@ submitButton.addEventListener('click', (e) => {
     //console.log(myLibrary); //remove later
     displayBooks(temp.id - 1);
     addBookModal.close();
-});
-
-bookRead.addEventListener('click', (e) => {
-    console.log(bookRead.checked);
-});
-
+}});
 
 function createBookCard(title, author, pages, read, id) {
     const book = document.createElement('div');
@@ -65,9 +80,18 @@ function createBookCard(title, author, pages, read, id) {
     readButton.addEventListener('click', (e) => {
         const parentId = e.target.parentNode.parentNode.id;
         const parent = document.getElementById(parentId);
+         
+        myLibrary[parentId - 1].read ? readButton.textContent = 'Alredy read!' : readButton.textContent = 'Not read';
 
-        e.target.classList.toggle('alredy-read');
-        myLibrary[parentId - 1].toggleRead();
+        if(myLibrary[parentId - 1].read) {
+            readButton.textContent = 'Not read!'
+            e.target.classList.remove('alredy-read');
+            myLibrary[parentId - 1].toggleRead();   
+        } else {
+            readButton.textContent = 'Alredy read!'
+            e.target.classList.add('alredy-read');
+            myLibrary[parentId - 1].toggleRead();         
+        }        
     });
 
     removeButton.addEventListener('click', (e) => {
@@ -81,11 +105,18 @@ function createBookCard(title, author, pages, read, id) {
         console.log(myLibrary);        
     });
 
+    if (read){
+        readButton.textContent = 'Alredy read!';
+        readButton.classList.add('alredy-read');
+    } else {
+        readButton.textContent = 'Not read';
+    }
+
     bookTitle.textContent = title;
     bookAuthor.textContent = author;
     bookPages.textContent = pages;
-    readButton.textContent = 'Read';
     removeButton.textContent = 'Remove';
+
 
     book.append(bookTitle, bookAuthor, bookPages);
     book.appendChild(cardButtons);
