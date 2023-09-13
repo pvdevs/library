@@ -1,5 +1,3 @@
-const myLibrary = [];
-
 const addBook = document.querySelector('.add-book');
 const addBookModal = document.getElementById('add-book-modal');
 const formClose = document.getElementById('form-close');
@@ -10,18 +8,34 @@ const bookRead = document.getElementById('book-read');
 const submitButton = document.getElementById('modal-submit');
 const books = document.querySelector('.books');
 const removeBookButton = document.querySelector('.remove');
+const dialogForm = document.getElementById('dialog-form');
 
+const myLibrary = [];
 
 addBook.addEventListener('click', (e) => { addBookModal.showModal(); });
 
-formClose.addEventListener('click', (e) => {
+formClose.addEventListener('click', () => closeAddBookModal());
+
+function closeAddBookModal() {
     addBookModal.close();
-});
+}
 
-submitButton.addEventListener('click', (e) => {
-    e.preventDefault()
+function submitBookForm() {
+    if(!validateForm()) return;
 
-    //Form Validation
+    const newBook = new Book(
+        bookTitle.value,
+        bookAuthor.value,
+        bookPages.value,
+        bookRead.checked
+    );
+
+    clearForm();
+    displayBook(newBook.id - 1);
+    addBookModal.close();
+}
+
+function validateForm() {
     if(bookTitle.value === '') {
         bookTitle.focus();
         return false;
@@ -33,25 +47,21 @@ submitButton.addEventListener('click', (e) => {
     if(bookPages.value <= 1) {
         bookPages.focus();
         return false;
+    } else {
+        return true;
     }
-    else {
+}
 
-    //Create new Book object, them clear inputs
-    const temp = new Book(bookTitle.value, bookAuthor.value, bookPages.value, bookRead.checked);
-    bookTitle.value = '';
-    bookAuthor.value = '';
-    bookPages.value = '';
-    bookRead.checked = false;
-    
-    //console.log(myLibrary); //remove later
-    displayBooks(temp.id - 1);
-    addBookModal.close();
-}});
+function clearForm() { dialogForm.reset(); }
+
+submitButton.addEventListener('click', (e) => {
+    e.preventDefault()
+    submitBookForm();
+});
 
 function createBookCard(title, author, pages, read, id) {
     const book = document.createElement('div');
     book.classList.add('book');
-
     book.setAttribute("id", `${id}`);
 
     const bookTitle = document.createElement('h2');
@@ -79,9 +89,6 @@ function createBookCard(title, author, pages, read, id) {
 
     readButton.addEventListener('click', (e) => {
         const parentId = e.target.parentNode.parentNode.id;
-        const parent = document.getElementById(parentId);
-         
-        myLibrary[parentId - 1].read ? readButton.textContent = 'Alredy read!' : readButton.textContent = 'Not read';
 
         if(myLibrary[parentId - 1].read) {
             readButton.textContent = 'Not read!'
@@ -99,10 +106,7 @@ function createBookCard(title, author, pages, read, id) {
         const parent = document.getElementById(parentId);
 
         books.removeChild(parent);
-
-        console.log(myLibrary);
-        myLibrary.splice(parentId - 1,1);
-        console.log(myLibrary);        
+        myLibrary.splice(parentId - 1 , 1);
     });
 
     if (read){
@@ -111,25 +115,25 @@ function createBookCard(title, author, pages, read, id) {
     } else {
         readButton.textContent = 'Not read';
     }
-
     bookTitle.textContent = title;
     bookAuthor.textContent = author;
     bookPages.textContent = pages;
     removeButton.textContent = 'Remove';
 
 
-    book.append(bookTitle, bookAuthor, bookPages);
-    book.appendChild(cardButtons);
-
+    book.append(bookTitle, bookAuthor, bookPages, cardButtons);
     cardButtons.append(readButton, removeButton);
-
     books.appendChild(book);
 }
 
-function displayBooks(id) {
-    createBookCard(myLibrary[id].title, myLibrary[id].author, myLibrary[id].pages, myLibrary[id].read, myLibrary[id].id);
+function displayBook(id) {
+    createBookCard(
+        myLibrary[id].title,
+        myLibrary[id].author,
+        myLibrary[id].pages,
+        myLibrary[id].read,
+        myLibrary[id].id);
 }
-
 
 function Book(title, author, pages, read) {
     this.title = title;
@@ -137,17 +141,9 @@ function Book(title, author, pages, read) {
     this.pages = pages;
     this.read = read;
     this.id = myLibrary.length + 1;
-    this.info = function () {
-        console.log(`${this.title} by ${this.author}, ${this.pages} Pages, ${this.read} Read, ${this.id} Id.`);
-    }
+    this.info = () => console.log(`${this.title} by ${this.author}, ${this.pages} Pages, ${this.read} Read, ${this.id} Id.`);
     myLibrary.push(this);
 };
-
-
-const theHobbit1 = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false);
-const theHobbit2 = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false);
-const theHobbit3 = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false);
-
 
 Book.prototype.info = function () {
     console.log(`
@@ -158,14 +154,4 @@ Book.prototype.info = function () {
     ${this.id} Id.`);
 }
 
-Book.prototype.toggleRead = function() {
-    this.read = !this.read;
-}
-
-theHobbit1.info();
-theHobbit2.info();
-theHobbit3.info();
-
-console.log(myLibrary);
-
-// Notes for myself -> I need to create the function that toggles if i read or not the book.
+Book.prototype.toggleRead = function() { this.read = !this.read; }

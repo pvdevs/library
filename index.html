@@ -13,8 +13,12 @@
     </div>
 
     <div class="content">
+        <form action="" method="dialog" >
+            <button class="add-book">Add Book</button>
+        </form>
+
         <dialog id="add-book-modal">
-            <form class="book-modal">
+            <form class="book-modal" id="dialog-form">
                 <button type="reset" id="form-close">X</button>             
                 <div class="form-input">
                     <label for="book-title">Book Title:</label>
@@ -36,9 +40,6 @@
             </form>
         </dialog>
 
-        <form action="" method="dialog">
-            <button class="add-book">Add Book</button>
-        </form>
         <div class="books">
             <div class="book">
                 <h2 class="book-info title">The name of the wind!</h2>
