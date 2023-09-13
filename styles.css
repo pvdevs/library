@@ -5,7 +5,11 @@ body, h1, p, h2 {
     padding: 0;
     margin: 0;
     font-family: 'Inter', sans-serif;
-    color: #161616;
+    color: #ffffff;
+}
+
+body {
+    background-color: #090A0D;
 }
 
 h2 {
@@ -13,8 +17,12 @@ h2 {
     font-size: 24px;
 }
 
+h1 {
+    font-weight: 600;
+}
+
 .header {
-    border-bottom: solid 1px #9c9c9c;
+    border-bottom: solid 1px #555555;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -33,11 +41,11 @@ h2 {
     inline-size: fit-content;
     font: inherit;
     font-size: 16px;
-    background-color:navy;
+    background-color:#4848ff;
     color: #fff;
     border-radius: 4px;
     border: none;
-    padding: 12px 24px;
+    padding: 12px 32px;
 }
 
 .cards {
@@ -50,8 +58,8 @@ h2 {
     justify-content: center;
     align-items: center;
     gap: 16px;
-    border: 1px solid #9c9c9c;
-    background-color: #fff;
+    border: 1px solid #555555;
+    background-color: #141517;
     padding: 24px;
     border-radius: 4px;
 }
@@ -59,8 +67,8 @@ h2 {
 .read {
     font: inherit;
     font-size: 16px;
-    background-color:#e00b0b;
-    color: #fff;
+    background-color:#c92323;
+    color: #fff;    
     border-radius: 4px;
     border: none;
     padding: 12px 24px;
@@ -69,18 +77,19 @@ h2 {
 .remove {
     font: inherit;
     font-size: 16px;
-    background-color:#fff;
-    color: #e00b0b;
+    background-color: transparent;
+    color: #ffffff;
     border-radius: 4px;
-    border: solid 1px #e00b0b;
+    border: solid 1px #cacaca;
     padding: 12px 24px;
 }
 
 .buttons {
-    display: grid;
-    grid-template-rows: repeat(2, 1fr);
-    grid-template-columns: 1fr;
-    align-items: end;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-end;
+    margin-top: auto;
     gap: 16px;
     padding-top: 16px;
     inline-size: 100%;
@@ -107,7 +116,7 @@ input {
     width: 100%;
     font: inherit;
     font-size: 16px;
-    background-color:navy;
+    background-color:#4848ff;
     color: #fff;
     border-radius: 4px;
     border: none;
@@ -133,14 +142,25 @@ input {
 .books {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(340px, 0.2fr));
+    justify-content: center;
     gap: 24px;
 }
 
 .book-info {
-    overflow-wrap: break-word;
+    word-break: break-all;
 }
 
 .alredy-read{
-    background-color: #00c010;
+    background-color: #33363f;
+}
+
+input[type = checkbox] {
+    accent-color: #4848ff;
+    cursor: pointer;
+}
+
+button:hover {
+    filter: brightness(85%);
+    cursor: pointer;
 }
