@@ -7,7 +7,6 @@ const bookPages = document.getElementById('book-pages');
 const bookRead = document.getElementById('book-read');
 const submitButton = document.getElementById('modal-submit');
 const booksContainer = document.querySelector('.books');
-const removeBookButton = document.querySelector('.remove');
 const dialogForm = document.getElementById('dialog-form');
 
 const myLibrary = [];
@@ -19,6 +18,24 @@ submitButton.addEventListener('click', (e) => {
     e.preventDefault()
     submitBookForm();
 });
+
+function buttonsListeners(readBtn, removeBtn, book) {
+    readBtn.addEventListener('click', (e) => {
+        books.readBook(book.id);
+        if(book.isRead){
+            readBtn.textContent = 'Alredy read!';
+            readBtn.classList.add('alredy-read');
+        } else {
+            readBtn.textContent = 'Not read';
+            readBtn.classList.remove('alredy-read');
+        }
+    });
+
+    removeBtn.addEventListener('click', e => {
+        books.removeBook(book.id);
+        booksContainer.removeChild(document.getElementById(book.id))
+    })
+}
 
 //Functions
 function closeAddBookModal() { addBookModal.close(); }
@@ -34,8 +51,10 @@ function submitBookForm() {
         bookRead.checked
     );
 
+    books.addBook(newBook);
+
     clearForm();
-    displayBook(newBook);
+    createBookCard(newBook);
     addBookModal.close();
 }
 
@@ -72,74 +91,32 @@ function createBookCard(book) {
     cardButtons.classList.add('buttons');
     readButton.classList.add('book-info', 'read');
     removeButton.classList.add('book-info', 'remove');
+
     bookCard.setAttribute("id", `${book.id}`);
-
-    if(book.read){
-        readButton.textContent = 'Read!';
-        readButton.classList.add('alredy-read');
-    }
-
-    readButton.addEventListener('click', (e) => {
-        const parentId = e.target.parentNode.parentNode.id;
-
-        myLibrary.forEach((book) => { // Transform this into a function inside of Library class
-            if(book.id == parentId){
-                if(book.read){
-                    readButton.textContent = 'Not read!';
-                    e.target.classList.remove('alredy-read');
-                    book.toggleRead();
-                }
-                else{
-                    readButton.textContent = 'Alredy read!';
-                    e.target.classList.add('alredy-read');
-                    book.toggleRead();  
-        }}});
-    });
-
-    removeButton.addEventListener('click', (e) => {
-        const parentId = e.target.parentNode.parentNode.id;
-        const parent = document.getElementById(parentId);
-
-        const filterObj = myLibrary.filter(obj => {
-            return obj.id == parentId;
-        });
-
-        myLibrary.splice(filterObj, 1);
-        booksContainer.removeChild(parent);
-    });
-
-    if (book.read){
-        readButton.textContent = 'Alredy read!';
-        readButton.classList.add('alredy-read');
-    } else {
-        readButton.textContent = 'Not read';
-    }
 
     bookTitle.textContent = book.title;
     bookAuthor.textContent = book.author;
     bookPages.textContent = book.pages;
     removeButton.textContent = 'Remove';
 
+    buttonsListeners(readButton, removeButton, book);
+
+    if (book.isRead){
+        readButton.textContent = 'Alredy read!';
+        readButton.classList.add('alredy-read');
+    } else {
+        readButton.textContent = 'Not read';
+        readButton.classList.remove('alredy-read');
+    }
+
     bookCard.append(bookTitle, bookAuthor, bookPages, cardButtons);
     cardButtons.append(readButton, removeButton);
 
-    return bookCard;
-}
-
-function displayBook(book) {
-    const bookCard = createBookCard(book);
     booksContainer.appendChild(bookCard);
 }
 
-function idGenerator(){
-    const randomNumber = Math.floor(Math.random() * 9000);
-    const idAlredyExists = myLibrary.some((book)=>{ book.id === randomNumber; });
 
-    if(idAlredyExists) idGenerator();
-    else return randomNumber;
-}
-
-//Constructor
+//Classes
 class Book {
 
     constructor(title, author, pages, isRead){
@@ -147,20 +124,30 @@ class Book {
         this.author = author;
         this.pages = pages;
         this.isRead = isRead;
-        this.id = idGenerator();
-        myLibrary.push(this);
+        this._id = Math.floor(Math.random() * 900);
     }
 
     toggleRead() {
         this.isRead = !this.isRead;
     }
-    
+
+    get id() {
+        return this._id;
+    }
+
+    set id(value) {
+        if (books.isInLibrary(this)) {
+            this._id = Math.floor(Math.random() * 900);
+        }
+    }
+
 };
+
 
 class Library {
 
     constructor(){
-        const books = [];
+        this.books = [];
     }
 
     addBook(newBook) {
@@ -175,19 +162,10 @@ class Library {
         const book = this.books.find(book => book.id === bookId);
         book.toggleRead();
     }
-
+    
     isInLibrary(newBook) {
         return this.books.some(book => book.id === newBook.id);
     }
 }
 
-const libTest = new Library;
-
-const bookTest = new Book('palo','authortest',234,false);
-const bookTest2 = new Book('estea','authortest2',424,true);
-
-console.log(bookTest);
-console.log(myLibrary);
-
-//Prototype
-//Book.prototype.toggleRead = function() {this.read = !this.read;}
+const books = new Library();
