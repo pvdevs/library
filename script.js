@@ -58,26 +58,26 @@ function validateForm() {
 
 function createBookCard(book) {
     const bookCard = document.createElement('div');
+    const bookTitle = document.createElement('h2');
+    const bookAuthor = document.createElement('p');
+    const bookPages = document.createElement('p');
+    const cardButtons = document.createElement('div');
+    const readButton = document.createElement('button');
+    const removeButton = document.createElement('button');
+
     bookCard.classList.add('book');
+    bookTitle.classList.add('book-info', 'title');
+    bookAuthor.classList.add('book-info', 'author');
+    bookPages.classList.add('book-info', 'pages');
+    cardButtons.classList.add('buttons');
+    readButton.classList.add('book-info', 'read');
+    removeButton.classList.add('book-info', 'remove');
     bookCard.setAttribute("id", `${book.id}`);
 
-    const bookTitle = document.createElement('h2');
-    bookTitle.classList.add('book-info', 'title');
-
-    const bookAuthor = document.createElement('p');
-    bookAuthor.classList.add('book-info', 'author');
-
-    const bookPages = document.createElement('p');
-    bookPages.classList.add('book-info', 'pages');
-
-    const cardButtons = document.createElement('div');
-    cardButtons.classList.add('buttons');
-
-    const readButton = document.createElement('button');
-    readButton.classList.add('book-info', 'read');
-
-    const removeButton = document.createElement('button');
-    removeButton.classList.add('book-info', 'remove');
+    if(book.read){
+        readButton.textContent = 'Read!';
+        readButton.classList.add('alredy-read');
+    }
 
     readButton.addEventListener('click', (e) => {
         const parentId = e.target.parentNode.parentNode.id;
@@ -142,17 +142,17 @@ function idGenerator(){
 //Constructor
 class Book {
 
-    constructor(title, author, pages, read){
+    constructor(title, author, pages, isRead){
         this.title = title;
         this.author = author;
         this.pages = pages;
-        this.read = read;
+        this.isRead = isRead;
         this.id = idGenerator();
         myLibrary.push(this);
     }
 
     toggleRead() {
-        this.read = !this.read
+        this.isRead = !this.isRead;
     }
     
 };
