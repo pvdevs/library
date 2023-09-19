@@ -70,7 +70,7 @@ function createBookCard(book) {
     const bookPages = document.createElement('p');
     bookPages.classList.add('book-info', 'pages');
 
-    const cardButtons = document.createElement('div'); // append os botoes aq // UNFINISHED (rever logica dos botoes de card)
+    const cardButtons = document.createElement('div');
     cardButtons.classList.add('buttons');
 
     const readButton = document.createElement('button');
@@ -82,7 +82,7 @@ function createBookCard(book) {
     readButton.addEventListener('click', (e) => {
         const parentId = e.target.parentNode.parentNode.id;
 
-        myLibrary.forEach((book) => {
+        myLibrary.forEach((book) => { // Transform this into a function inside of Library class
             if(book.id == parentId){
                 if(book.read){
                     readButton.textContent = 'Not read!';
@@ -140,14 +140,54 @@ function idGenerator(){
 }
 
 //Constructor
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-    this.id = idGenerator();
-    myLibrary.push(this);
+class Book {
+
+    constructor(title, author, pages, read){
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+        this.id = idGenerator();
+        myLibrary.push(this);
+    }
+
+    toggleRead() {
+        this.read = !this.read
+    }
+    
 };
 
+class Library {
+
+    constructor(){
+        const books = [];
+    }
+
+    addBook(newBook) {
+        if(!this.isInLibrary(newBook)) this.books.push(newBook);
+    }
+
+    removeBook(bookId){
+        this.books = this.books.filter(book => book.id !== bookId);
+    }
+
+    readBook(bookId) {
+        const book = this.books.find(book => book.id === bookId);
+        book.toggleRead();
+    }
+
+    isInLibrary(newBook) {
+        return this.books.some(book => book.id === newBook.id);
+    }
+}
+
+const libTest = new Library;
+
+const bookTest = new Book('palo','authortest',234,false);
+const bookTest2 = new Book('estea','authortest2',424,true);
+
+console.log(bookTest);
+console.log(myLibrary);
+
 //Prototype
-Book.prototype.toggleRead = function() { this.read = !this.read; }
+//Book.prototype.toggleRead = function() {this.read = !this.read;}
