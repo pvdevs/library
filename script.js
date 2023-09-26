@@ -109,8 +109,8 @@ function createBookCard(book) {
     });
 
     if (book.read){
-        readButton.textContent = 'Alredy read!';
-        readButton.classList.add('alredy-read');
+        readButton.textContent = 'Already read!';
+        readButton.classList.add('already-read');
     } else {
         readButton.textContent = 'Not read';
     }
